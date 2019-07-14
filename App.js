@@ -134,7 +134,7 @@ export default class App extends React.Component {
   itemPressed = item => {
     this.setState(state => {
       const newData = [...this.state.dataSource]
-      newData[item.id].active = true
+      newData[item.id].active = !newData[item.id].active
       return newData
     })
   }
