@@ -1,5 +1,12 @@
 import React from "react"
-import { StyleSheet, Text, View, FlatList, Image } from "react-native"
+import {
+  StyleSheet,
+  Text,
+  View,
+  FlatList,
+  TouchableOpacity,
+} from "react-native"
+import { Font } from "expo"
 
 var chars = [
   "人",
@@ -93,14 +100,12 @@ var chars = [
 ]
 
 export default class App extends React.Component {
-  constructor() {
-    super()
-    this.state = {
-      dataSource: {},
-    }
+  state = {
+    dataSource: {},
+    fontLoaded: false,
   }
 
-  componentDidMount() {
+  async componentDidMount() {
     // shuffle
     for (let i = chars.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1))
@@ -111,11 +116,17 @@ export default class App extends React.Component {
       return {
         id: i,
         word: chars[i],
-        src: "http://placehold.it/200x200?text=" + (i + 1),
       }
     })
     this.setState({
       dataSource: items,
+    })
+
+    await Font.loadAsync({
+      KaiTi: require("./assets/fonts/KaiTi.ttf"),
+    })
+    this.setState({
+      fontLoaded: true,
     })
   }
 
@@ -126,9 +137,13 @@ export default class App extends React.Component {
           style={styles.grid}
           data={this.state.dataSource}
           renderItem={({ item }) => (
-            <View style={styles.gridItem}>
-              <Text style={styles.word}>{item.word}</Text>
-            </View>
+            <TouchableOpacity>
+              <View style={styles.gridItem}>
+                {this.state.fontLoaded ? (
+                  <Text style={styles.word}>{item.word}</Text>
+                ) : null}
+              </View>
+            </TouchableOpacity>
           )}
           numColumns={8}
           keyExtractor={(item, index) => index}
@@ -153,12 +168,13 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: "column",
     margin: 1,
-    backgroundColor: "lightblue",
+    borderColor: "#aaa",
+    borderWidth: 1,
     padding: 20,
   },
   word: {
     fontSize: 40,
     textAlign: "center",
-    fontFamily: "Heiti SC",
+    fontFamily: "KaiTi",
   },
 })
