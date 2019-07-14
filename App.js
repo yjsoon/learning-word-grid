@@ -6,7 +6,7 @@ import {
   FlatList,
   TouchableOpacity,
 } from "react-native"
-import { Font } from "expo"
+import * as Font from "expo-font"
 
 var chars = [
   "人",
