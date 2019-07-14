@@ -116,6 +116,7 @@ export default class App extends React.Component {
       return {
         id: i,
         word: chars[i],
+        active: false,
       }
     })
     this.setState({
@@ -130,15 +131,30 @@ export default class App extends React.Component {
     })
   }
 
+  itemPressed = item => {
+    this.setState(state => {
+      const newData = [...this.state.dataSource]
+      newData[item.id].active = true
+      return newData
+    })
+  }
+
   render() {
     return (
       <View style={styles.container}>
         <FlatList
           style={styles.grid}
           data={this.state.dataSource}
+          extraData={this.state}
           renderItem={({ item }) => (
-            <TouchableOpacity>
-              <View style={styles.gridItem}>
+            <TouchableOpacity onPress={this.itemPressed.bind(this, item)}>
+              <View
+                style={
+                  item.active
+                    ? [styles.gridItem, styles.gridItemActive]
+                    : styles.gridItem
+                }
+              >
                 {this.state.fontLoaded ? (
                   <Text style={styles.word}>{item.word}</Text>
                 ) : null}
@@ -161,16 +177,17 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     paddingTop: 30,
   },
-  grid: {
-    width: "90%",
-  },
+  grid: {},
   gridItem: {
     flex: 1,
     flexDirection: "column",
     margin: 1,
     borderColor: "#aaa",
     borderWidth: 1,
-    padding: 20,
+    padding: 18,
+  },
+  gridItemActive: {
+    backgroundColor: "lightblue",
   },
   word: {
     fontSize: 40,
