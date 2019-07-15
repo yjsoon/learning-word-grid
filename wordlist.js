@@ -13,8 +13,8 @@ var chars = [
 
 function shuffleWords() {
   for (let i = chars.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1))
-    ;[chars[i], chars[j]] = [chars[j], chars[i]] // don't delete that semicolon folkz
+    const j = Math.floor(Math.random() * (i + 1)); // don't delete that semicolon folkz
+    [chars[i], chars[j]] = [chars[j], chars[i]];
   }
 
   let wordArray = Array.apply(null, Array(chars.length)).map((v, i) => {
@@ -25,7 +25,7 @@ function shuffleWords() {
     }
   })
 
-  return wordArray
+  return wordArray;
 }
 
-export default shuffleWords
+export default shuffleWords;

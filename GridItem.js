@@ -1,25 +1,25 @@
-import React from "react"
-import { StyleSheet, Text, View, TouchableOpacity } from "react-native"
-import * as Font from "expo-font"
+import React from "react";
+import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
+import * as Font from "expo-font";
 
 export default class GridItem extends React.Component {
   state = {
     fontLoaded: false,
-  }
+  };
 
   async componentDidMount() {
     await Font.loadAsync({
       KaiTi: require("./assets/fonts/KaiTi.ttf"),
-    })
+    });
     this.setState({
       fontLoaded: true,
-    })
+    });
   }
 
   render() {
     const style = this.props.highlighted
       ? [styles.gridItem, styles.gridItemActive]
-      : styles.gridItem
+      : styles.gridItem;
     return (
       <TouchableOpacity onPress={this.props.onPress}>
         <View style={style}>
@@ -28,7 +28,7 @@ export default class GridItem extends React.Component {
           ) : null}
         </View>
       </TouchableOpacity>
-    )
+    );
   }
 }
 
@@ -49,4 +49,4 @@ const styles = StyleSheet.create({
     textAlign: "center",
     fontFamily: "KaiTi",
   },
-})
+});

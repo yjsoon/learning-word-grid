@@ -1,38 +1,38 @@
-import React from "react"
+import React from "react";
 import {
   StyleSheet,
   Text,
   View,
   FlatList,
   TouchableOpacity,
-} from "react-native"
-import GridItem from "./GridItem"
-import shuffleWords from "./wordlist"
+} from "react-native";
+import GridItem from "./GridItem";
+import shuffleWords from "./wordlist";
 
 export default class App extends React.Component {
   state = {
     dataSource: {},
-  }
+  };
 
   componentDidMount() {
     this.setState({
       dataSource: shuffleWords(),
-    })
+    });
   }
 
   itemPressed = item => {
     this.setState(state => {
-      const dataSource = [...this.state.dataSource]
-      dataSource[item.index].active = !dataSource[item.index].active
-      return { dataSource }
-    })
-  }
+      const dataSource = [...this.state.dataSource];
+      dataSource[item.index].active = !dataSource[item.index].active;
+      return { dataSource };
+    });
+  };
 
   resetButtonPressed = () => {
     this.setState({
       dataSource: shuffleWords(),
-    })
-  }
+    });
+  };
 
   render() {
     return (
@@ -55,7 +55,7 @@ export default class App extends React.Component {
           keyExtractor={(item, index) => index}
         />
       </View>
-    )
+    );
   }
 }
 
@@ -68,4 +68,4 @@ const styles = StyleSheet.create({
     paddingTop: 30,
   },
   grid: {},
-})
+});
