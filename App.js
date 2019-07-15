@@ -6,7 +6,7 @@ import {
   FlatList,
   TouchableOpacity,
 } from "react-native"
-import * as Font from "expo-font"
+import GridItem from "./GridItem.js"
 
 var chars = [
   "人",
@@ -102,10 +102,9 @@ var chars = [
 export default class App extends React.Component {
   state = {
     dataSource: {},
-    fontLoaded: false,
   }
 
-  async componentDidMount() {
+  componentDidMount() {
     // shuffle
     for (let i = chars.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1))
@@ -122,20 +121,13 @@ export default class App extends React.Component {
     this.setState({
       dataSource: items,
     })
-
-    await Font.loadAsync({
-      KaiTi: require("./assets/fonts/KaiTi.ttf"),
-    })
-    this.setState({
-      fontLoaded: true,
-    })
   }
 
   itemPressed = item => {
     this.setState(state => {
-      const newData = [...this.state.dataSource]
-      newData[item.index].active = !newData[item.index].active
-      return newData
+      const dataSource = [...this.state.dataSource]
+      dataSource[item.index].active = !dataSource[item.index].active
+      return { dataSource }
     })
   }
 
@@ -147,19 +139,11 @@ export default class App extends React.Component {
           data={this.state.dataSource}
           extraData={this.state}
           renderItem={({ item }) => (
-            <TouchableOpacity onPress={this.itemPressed.bind(this, item)}>
-              <View
-                style={
-                  item.active
-                    ? [styles.gridItem, styles.gridItemActive]
-                    : styles.gridItem
-                }
-              >
-                {this.state.fontLoaded ? (
-                  <Text style={styles.word}>{item.word}</Text>
-                ) : null}
-              </View>
-            </TouchableOpacity>
+            <GridItem
+              onPress={this.itemPressed.bind(this, item)}
+              highlighted={!!this.state.dataSource[item.index].active}
+              word={item.word}
+            />
           )}
           numColumns={8}
           keyExtractor={(item, index) => index}
@@ -178,20 +162,4 @@ const styles = StyleSheet.create({
     paddingTop: 30,
   },
   grid: {},
-  gridItem: {
-    flex: 1,
-    flexDirection: "column",
-    margin: 1,
-    borderColor: "#aaa",
-    borderWidth: 1,
-    padding: 18,
-  },
-  gridItemActive: {
-    backgroundColor: "lightblue",
-  },
-  word: {
-    fontSize: 40,
-    textAlign: "center",
-    fontFamily: "KaiTi",
-  },
 })
