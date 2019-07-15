@@ -7,7 +7,7 @@ import {
   TouchableOpacity,
 } from "react-native"
 import GridItem from "./GridItem"
-import characters from "./wordlist"
+import shuffleWords from "./wordlist"
 
 export default class App extends React.Component {
   state = {
@@ -16,7 +16,7 @@ export default class App extends React.Component {
 
   componentDidMount() {
     this.setState({
-      dataSource: characters,
+      dataSource: shuffleWords(),
     })
   }
 
@@ -28,9 +28,18 @@ export default class App extends React.Component {
     })
   }
 
+  resetButtonPressed = () => {
+    this.setState({
+      dataSource: shuffleWords(),
+    })
+  }
+
   render() {
     return (
       <View style={styles.container}>
+        <TouchableOpacity onPress={this.resetButtonPressed}>
+          <Text>Reset</Text>
+        </TouchableOpacity>
         <FlatList
           style={styles.grid}
           data={this.state.dataSource}
