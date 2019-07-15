@@ -14,7 +14,7 @@ var chars = [
 function shuffleWords() {
   for (let i = chars.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1))
-    [chars[i], chars[j]] = [chars[j], chars[i]]
+    ;[chars[i], chars[j]] = [chars[j], chars[i]]
   }
 
   let wordArray = Array.apply(null, Array(chars.length)).map((v, i) => {
