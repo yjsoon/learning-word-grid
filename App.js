@@ -114,7 +114,7 @@ export default class App extends React.Component {
 
     let items = Array.apply(null, Array(chars.length)).map((v, i) => {
       return {
-        id: i,
+        index: i,
         word: chars[i],
         active: false,
       }
@@ -134,7 +134,7 @@ export default class App extends React.Component {
   itemPressed = item => {
     this.setState(state => {
       const newData = [...this.state.dataSource]
-      newData[item.id].active = !newData[item.id].active
+      newData[item.index].active = !newData[item.index].active
       return newData
     })
   }
